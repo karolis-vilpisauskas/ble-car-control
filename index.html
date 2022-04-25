@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="msapplication-TileColor" content="#2196f3" />
+    <meta name="msapplication-config" content="browserconfig.xml" />
+    <meta name="theme-color" content="#2196f3" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="msapplication-starturl" content="./" />
+    <meta
+      name="description"
+      content="Progressive Web Application for serial communication with your own Bluetooth Low Energy (Smart) devices"
+    />
+
+    <title>Web Bluetooth Terminal</title>
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="icons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="icons/favicon-16x16.png"
+    />
+    <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#2196f3" />
+    <link rel="shortcut icon" href="icons/favicon.ico" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link href="css/normalize.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="app">
+      <div
+        class="toolbar border-b-2 border-blue-100 flex justify-between w-full px-2"
+      >
+        <h1 class="font-sans font-bold text-2xl">Carls Car</h1>
+        <div class="buttons py-2">
+          <button
+            id="connectButton"
+            type="button"
+            aria-label="Connect"
+            class="py-1 px-5 rounded-full bg-blue-500 mr-2"
+          >
+            <i class="material-icons text-4xl text-white"
+              >bluetooth_connected</i
+            >
+          </button>
+
+          <button
+            id="disconnectButton"
+            type="button"
+            aria-label="Disconnect"
+            class="py-1 px-5 rounded-full bg-rose-600"
+          >
+            <i class="material-icons text-4xl text-white">bluetooth_disabled</i>
+          </button>
+        </div>
+      </div>
+      <div class="container mx-auto h-screen px-2 w-full flex flex-col">
+        <h1 class="font-sans text-4xl center font-bold pt-2 m-0">Controls</h1>
+        <div class="flex flex-row py-5 items-center flex-wrap w-full">
+          <div class="w-full mb-8">
+            <button
+              id="stopButton"
+              class="w-full bg-rose-600 font-sans font-bold text-4xl border border-solid rounded border-red-600 h-24 text-white"
+            >
+              STOP
+            </button>
+          </div>
+          <div class="w-full mb-4">
+            <p class="font-sans text-lg font-bold">Forward & Backwards</p>
+            <div class="flex mt-2">
+              <button
+                id="forwardButton"
+                class="border border-solid rounded border-indigo-600 w-1/2 mx-1 bg-blue-700"
+              >
+                <i class="material-icons text-6xl text-white">arrow_upward</i>
+              </button>
+              <button
+                id="backwardsButton"
+                class="border border-solid rounded border-indigo-600 w-1/2 mx-1 bg-blue-700"
+              >
+                <i class="material-icons text-6xl text-white">arrow_downward</i>
+              </button>
+            </div>
+          </div>
+          <div class="w-1/2 p-1">
+            <p class="font-sans text-lg font-bold">Turn angle</p>
+            <p class="font-sans text-md mb-2">
+              Current Angle: <span id="currentTurnAngle">80</span>
+            </p>
+            <input
+              type="range"
+              min="40"
+              max="120"
+              value="80"
+              class="form-range appearance-none w-full h-10 p-4 bg-gray-100 rounded-full focus:outline-none focus:ring-0 focus:shadow-none"
+              id="turnSlider"
+            />
+          </div>
+          <div class="w-1/2 p-1">
+            <p class="font-sans text-lg font-bold">Speed</p>
+            <p class="font-sans text-sm mb-2">
+              Current Speed: <span id="currentSpeed">0</span>
+            </p>
+            <input
+              type="range"
+              min="0"
+              max="255"
+              value="0"
+              class="form-range appearance-none w-full h-10 p-4 bg-gray-100 rounded-full focus:outline-none focus:ring-0 focus:shadow-none"
+              id="speedSlider"
+              step="255"
+            />
+          </div>
+        </div>
+        <div class="flex flex-col grow mb-4">
+          <div id="device-name" class="font-sans font-bold text-2xl">
+            Commands
+          </div>
+          <div
+            id="terminal"
+            class="h-40 overflow-auto border border-solid rounded p-2 mt-2 grow"
+          >
+            Connect a device to begin...
+          </div>
+        </div>
+      </div>
+
+      <form id="send-form" class="send-form" style="display: none">
+        <input
+          id="input"
+          type="text"
+          aria-label="Input"
+          autocomplete="off"
+          placeholder="Type something to send..."
+        />
+
+        <button type="submit" aria-label="Send">
+          <i class="material-icons">send</i>
+        </button>
+      </form>
+    </div>
+
+    <script src="js/BluetoothTerminal.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/companion.js" data-service-worker="sw.js"></script>
+  </body>
+</html>
