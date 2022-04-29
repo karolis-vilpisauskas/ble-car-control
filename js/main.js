@@ -103,8 +103,8 @@ disconnectButton.addEventListener("click", () => {
 
 stopButton.addEventListener("click", () => {
   send("stop:0");
-  turnSlider.value = 80;
-  currentTurnAngle.innerHTML = 80;
+  turnSlider.value = 90;
+  currentTurnAngle.innerHTML = 90;
   currentSpeed.innerHTML = "Slow";
   speedToggleIcon.innerHTML = "toggle_off";
   speedButton.classList.remove("bg-green-500");
