@@ -62,8 +62,7 @@ const disconnectButton = document.getElementById("disconnectButton");
 const forwardButton = document.getElementById("forwardButton");
 const backwardsButton = document.getElementById("backwardsButton");
 const stopButton = document.getElementById("stopButton");
-const speedToggleIcon = document.getElementById("speedToggleIcon");
-let toggleSpeed = false;
+const speedSlider = document.getElementById("speedSlider");
 
 turnSlider.oninput = function () {
   const turnAngle = this.value;
@@ -71,22 +70,11 @@ turnSlider.oninput = function () {
   setTimeout(() => send(`turn:${turnAngle}`), 35);
 };
 
-speedButton.addEventListener("click", () => {
-  if (toggleSpeed) {
-    currentSpeed.innerHTML = "Slow";
-    speedToggleIcon.innerHTML = "toggle_off";
-    speedButton.classList.remove("bg-green-500");
-    speedButton.classList.add("bg-red-500");
-    setTimeout(() => send("speed:0"), 35);
-  } else {
-    currentSpeed.innerHTML = "Fast";
-    speedToggleIcon.innerHTML = "toggle_on";
-    speedButton.classList.remove("bg-red-500");
-    speedButton.classList.add("bg-green-500");
-    setTimeout(() => send("speed:255"), 35);
-  }
-  toggleSpeed = !toggleSpeed;
-});
+speedSlider.oninput = function () {
+  const speed = this.value;
+  currentSpeed.innerHTML = speed;
+  setTimeout(() => send(`speed:${speed}`), 35);
+};
 
 connectButton.addEventListener("click", () => {
   terminal.connect().then(() => {
@@ -104,12 +92,9 @@ disconnectButton.addEventListener("click", () => {
 stopButton.addEventListener("click", () => {
   send("stop:0");
   turnSlider.value = 90;
+  speedSlider.value = 0;
   currentTurnAngle.innerHTML = 90;
-  currentSpeed.innerHTML = "Slow";
-  speedToggleIcon.innerHTML = "toggle_off";
-  speedButton.classList.remove("bg-green-500");
-  speedButton.classList.add("bg-red-500");
-  toggleSpeed = false;
+  currentSpeed.innerHTML = 0;
 });
 
 const holdit = (btn, action, start, speedup) => {
