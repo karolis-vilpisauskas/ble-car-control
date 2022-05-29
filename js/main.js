@@ -63,6 +63,7 @@ const forwardButton = document.getElementById("forwardButton");
 const backwardsButton = document.getElementById("backwardsButton");
 const stopButton = document.getElementById("stopButton");
 const speedSlider = document.getElementById("speedSlider");
+const autoButton = document.getElementById("autoButton");
 
 turnSlider.oninput = function () {
   const turnAngle = this.value;
@@ -95,6 +96,24 @@ stopButton.addEventListener("click", () => {
   speedSlider.value = 0;
   currentTurnAngle.innerHTML = 90;
   currentSpeed.innerHTML = 0;
+  turnSlider.disabled = false;
+  speedSlider.disabled = false;
+  autoButton.disabled = false;
+  forwardButton.disabled = false;
+  backwardsButton.disabled = false;
+});
+
+autoButton.addEventListener("click", () => {
+  send("auto:0");
+  turnSlider.value = 90;
+  speedSlider.value = 0;
+  currentTurnAngle.innerHTML = 90;
+  currentSpeed.innerHTML = 0;
+  turnSlider.disabled = true;
+  speedSlider.disabled = true;
+  autoButton.disabled = true;
+  forwardButton.disabled = true;
+  backwardsButton.disabled = true;
 });
 
 const holdit = (btn, action, start, speedup) => {
