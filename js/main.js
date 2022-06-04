@@ -64,6 +64,8 @@ const backwardsButton = document.getElementById("backwardsButton");
 const stopButton = document.getElementById("stopButton");
 const speedSlider = document.getElementById("speedSlider");
 const autoButton = document.getElementById("autoButton");
+const followLeftButton = document.getElementById("followLeft");
+let followLeft = 0;
 
 turnSlider.oninput = function () {
   const turnAngle = this.value;
@@ -101,6 +103,22 @@ stopButton.addEventListener("click", () => {
   autoButton.disabled = false;
   forwardButton.disabled = false;
   backwardsButton.disabled = false;
+  followLeft = 0;
+  followLeftButton.classList.remove("bg-green-600");
+  followLeftButton.classList.add("bg-red-600");
+});
+
+followLeftButton.addEventListener("click", () => {
+  if (followLeft === 0) {
+    followLeft = 1;
+    followLeftButton.classList.remove("bg-red-600");
+    followLeftButton.classList.add("bg-green-600");
+  } else {
+    followLeft = 0;
+    followLeftButton.classList.remove("bg-green-600");
+    followLeftButton.classList.add("bg-red-600");
+  }
+  send(`follow:${followLeft}`);
 });
 
 autoButton.addEventListener("click", () => {
